@@ -1,0 +1,18 @@
+{
+    "history" : {
+        "root" : {
+            "service" : "HR",
+            "operation" : 0,
+            "is_callback_needed" : true, 
+        },
+        
+        "codename-10-1" : {
+            "service" : "HR",
+            "operation" : 189,
+            "is_callback_needed" : false,
+        }
+    },
+    "data" :{
+        
+    }
+}
