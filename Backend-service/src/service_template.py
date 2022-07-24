@@ -30,4 +30,3 @@ class Service(Interface):
 
 
 serv = Service(url='http://192.168.141.61/protocol.json')
-serv.give_data_last_service()
