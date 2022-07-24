@@ -1,9 +1,13 @@
 import requests
+from configparser import ConfigParser
 
 
 class Interface:
-    def __init__(self, url: str) -> None:
-        self.url = url
+    def __init__(self) -> None:
+        config = ConfigParser()  # создаём объекта парсера
+        config.read("config.ini")  # читаем конфиг
+        self.url = config['config']['SNS_URL']
+
         self.data = self.get_data()
         self.last_target, self.pre_last_target = self.get_last_targets()
         self.pre_last_target['service_name'] = list(self.data['history'].keys())[-2]

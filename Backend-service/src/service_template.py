@@ -2,9 +2,9 @@ from interface import Interface
 
 
 class Service(Interface):
-    def __init__(self, url: str) -> None:
+    def __init__(self) -> None:
         """Получение данных с SNS (data, last_target, pre_last_target) и функции send_update_status"""
-        super().__init__(url)
+        super().__init__()
 
         self.__update_status = {
             'to': self.pre_last_target['service_name'],
@@ -29,4 +29,4 @@ class Service(Interface):
         self.__update_status['status_comment'] = comment
 
 
-serv = Service(url='http://192.168.141.61/protocol.json')
+serv = Service()
