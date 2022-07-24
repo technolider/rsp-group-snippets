@@ -6,13 +6,6 @@ class Service(Interface):
         """Получение данных с SNS (data, last_target, pre_last_target) и функции send_update_status"""
         super().__init__()
 
-        self.__update_status = {
-            'to': self.pre_last_target['service_name'],
-            'ray_id': int(self.data['ray_id']),
-            'status_update': 'OK',
-            'status_comment': 'something'
-        }
-
     def is_callback_needed(self) -> bool:
         """Нужны ли данные предыдущему сервису"""
         return self.pre_last_target['is_callback_needed']
