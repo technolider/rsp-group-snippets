@@ -8,7 +8,7 @@ class Interface:
     def __init__(self) -> None:
         """Читаем конфиг"""
         config = ConfigParser()
-        config.read("config.ini")
+        config.read("../../config.ini")
         self.url = config['config']['SNS_URL']
 
     def create_web_server(self) -> None:
