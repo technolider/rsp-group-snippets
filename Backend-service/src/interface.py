@@ -20,15 +20,6 @@ class Interface:
             """Получение данных от SNS"""
             self.data = request.get_json(force=True)
             self.get_last_targets()
-            # self.last_target, self.pre_last_target = Interface.get_last_targets(self.data)
-            # self.pre_last_target['service_name'] = list(self.data['history'].keys())[-2]
-
-            # self.__update_status = {
-            #     'to': self.pre_last_target['service_name'],
-            #     'ray_id': int(self.data['ray_id']),
-            #     'status_update': 'OK',
-            #     'status_comment': 'something'
-            # }
             return make_response('Success')
 
         self.app.run(host='127.0.0.1', port=5000, debug=True)
