@@ -18,8 +18,13 @@ func toHash(str string) string {
 
 }
 
-func check() {
-
+func checkUser(user []models.User, req models.Login) bool {
+	for i := 0; i < len(user); i++ {
+		if user[i].Login == req.Login && user[i].Password == toHash(req.Password) {
+			return true
+		}
+	}
+	return false
 }
 
 func LoginJSON(c *gin.Context) {
@@ -42,29 +47,17 @@ func LoginJSON(c *gin.Context) {
 	}
 
 	err = json.Unmarshal([]byte(jsonDataFromHttp), &user)
-	//fmt.Println(reflect.TypeOf(user))
-	data := []byte("password")
-	hash := sha256.Sum256(data)
-	//fmt.Printf("%x", hash[:])
-	h := fmt.Sprintf("%x", hash[:])
-	fmt.Println(h)
-	for i := 0; i < len(user); i++ {
-		if user[i].Login == req.Login && user[i].Password == toHash(req.Password) {
-			c.JSON(http.StatusOK, "ok")
-			break
-		}
-	}
-	//for i, var := range user {
-	//	if var.Login == req.Login && var.Password == req.Password {
-	//		c.JSON(http.StatusOK, "ok")
-	//		return
-	//	}
-	//}
 
-	session := sessions.Default(c)
-	session.Set("id", "userid")
-	session.Set("email", "test@gmail.com")
-	session.Save()
+	auth := checkUser(user, req)
+	if auth {
+		c.JSON(http.StatusOK, "ok")
+		session := sessions.Default(c)
+		session.Set("id", "userid")
+		session.Set("email", "test@gmail.com")
+		session.Save()
+	} else {
+		c.JSON(http.StatusUnauthorized, "unauthorized")
+	}
 
 }
 
