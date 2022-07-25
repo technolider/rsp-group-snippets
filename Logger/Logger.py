@@ -1,7 +1,16 @@
 import logging
 
 class Logger():
+    """
+        Класс логгера, реализует запись данных в два лога: service_name_recieved и service_name_sent.
+        service_name необходимо вставить вручную.
+    """
+
+
     def __init__(self, log_file_name:str) -> None:
+        """
+            Создание логгеров, в аргументах необходимо передать название сервиса
+        """
         self.recieve_logger = logging.getLogger("RECIEVED")
         self.sent_logger = logging.getLogger("SENT")
         self.recieve_logger.setLevel(logging.INFO)
