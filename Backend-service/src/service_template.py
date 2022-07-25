@@ -25,7 +25,6 @@ class Service:
     def give_data_last_service(self) -> None:
         """Отправка данных о статусе"""
         Interface.send_update_status(self, self.__update_status)
-        print('OK!')
 
     def set_status_update(self, status: str) -> None:
         """Редактирование статуса"""
