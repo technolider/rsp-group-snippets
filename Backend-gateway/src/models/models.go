@@ -6,10 +6,10 @@ type Login struct {
 }
 
 type User struct {
-	Login
-	Name       string `json:"name"`
-	Surname    string `json:"surname"`
-	Patronymic string `json:"patronymic"`
-	Email      string `json:"email"`
-	PhoneNum   string `json:"phone_num"`
+	Id             int    `json:"id" db:"id"`
+	Login          string `json:"login"`
+	Password       string `json:"password"`
+	UserName       string `json:"user_name" db:"user_name"`
+	UserSurname    string `json:"user_surname" db:"user_surname"`
+	UserPatronymic string `json:"user_patronymic" db:"user_patronymic"`
 }

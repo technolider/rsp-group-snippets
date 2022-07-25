@@ -18,7 +18,8 @@ func getJson(url string, target interface{}) error {
 	return json.NewDecoder(r.Body).Decode(target)
 }
 
-func GetUsersFromDB() (users []models.User) {
-	getJson("url", users)
+func GetAllUsersFromDB() (users []models.User) {
+	getJson("http://localhost:2000/DB/getAllUsers", users)
+	fmt.Println(users[0].UserName)
 	return
 }
