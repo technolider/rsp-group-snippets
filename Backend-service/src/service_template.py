@@ -7,6 +7,19 @@ class Service:
         Interface.__init__(self)
         Interface.create_web_server(self)
 
+    def get_last_targets(self) -> None:
+        """Получение двух последних действий"""
+        self.last_target, self.pre_last_target = list(self.data['history'].values())[-2:]
+        self.pre_last_target['service_name'] = list(self.data['history'].keys())[-2]
+
+        self.__update_status = {
+            'to': self.pre_last_target['service_name'],
+            'ray_id': int(self.data['ray_id']),
+            'status_update': 'OK',
+            'status_comment': 'something'
+        }
+        print(f'{self.url}\n{self.pre_last_target}\n{self.__update_status}')
+
     def is_callback_needed(self) -> bool:
         """Нужны ли данные предыдущему сервису"""
         return self.pre_last_target['is_callback_needed']
