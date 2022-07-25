@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 type RequestJSON struct {
@@ -59,15 +60,18 @@ func main() {
 
 	go func() {
 		for d := range msgs {
-			//log.Printf("Received a message: %s", d.Body)
+
 			var req RequestJSON
 			err := json.Unmarshal([]byte(d.Body), &req)
 			failOnError(err, "Failed to unmarshal json")
+
 			if len(req.History) == 0 {
-				//http.Post("", []byte(d.Body))
-				request, err := http.NewRequest("POST", "", bytes.NewBuffer([]byte(d.Body)))
+				jsonReq, err := json.Marshal(req)
+
+				request, err := http.NewRequest("POST", "http://192.168.141.139:5000", bytes.NewBuffer(jsonReq))
 				request.Header.Set("Content-Type", "application/json; charset=UTF-8")
-				client := &http.Client{}
+
+				client := &http.Client{Timeout: 30 * time.Second}
 				response, err := client.Do(request)
 				if err != nil {
 					panic(err)
