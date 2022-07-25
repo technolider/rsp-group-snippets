@@ -1,10 +1,11 @@
 from interface import Interface
 
 
-class Service(Interface):
+class Service:
     def __init__(self) -> None:
         """Получение данных с SNS (data, last_target, pre_last_target) и функции send_update_status"""
-        super().__init__()
+        Interface.__init__(self)
+        Interface.create_web_server(self)
 
     def is_callback_needed(self) -> bool:
         """Нужны ли данные предыдущему сервису"""
@@ -23,3 +24,7 @@ class Service(Interface):
 
 
 serv = Service()
+while True:
+    if serv.data:
+        print(serv.data)
+

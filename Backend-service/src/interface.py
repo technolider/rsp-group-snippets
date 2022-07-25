@@ -6,10 +6,12 @@ from configparser import ConfigParser
 
 class Interface:
     def __init__(self) -> None:
-        config = ConfigParser()  # создаём объекта парсера
-        config.read("config.ini")  # читаем конфиг
+        """Читаем конфиг"""
+        config = ConfigParser()
+        config.read("config.ini")
         self.url = config['config']['SNS_URL']
 
+    def create_web_server(self) -> None:
         """Создание веб-сервера"""
         self.app = Flask(__name__)
 
@@ -17,19 +19,18 @@ class Interface:
         def get_data_json():
             """Получение данных от SNS"""
             self.data = request.get_json(force=True)
-            self.last_target, self.pre_last_target = self.get_last_targets()
-            self.pre_last_target['service_name'] = list(self.data['history'].keys())[-2]
+            # self.last_target, self.pre_last_target = Interface.get_last_targets(self.data)
+            # self.pre_last_target['service_name'] = list(self.data['history'].keys())[-2]
 
-            self.__update_status = {
-                'to': self.pre_last_target['service_name'],
-                'ray_id': int(self.data['ray_id']),
-                'status_update': 'OK',
-                'status_comment': 'something'
-            }
+            # self.__update_status = {
+            #     'to': self.pre_last_target['service_name'],
+            #     'ray_id': int(self.data['ray_id']),
+            #     'status_update': 'OK',
+            #     'status_comment': 'something'
+            # }
             return make_response('Success')
 
         self.app.run(host='127.0.0.1', port=5000, debug=True)
-        """"""
 
     def get_last_targets(self) -> list:
         """Получение двух последних действий"""
