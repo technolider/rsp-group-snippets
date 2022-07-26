@@ -52,3 +52,7 @@ def ask(msg: BaseMessage, service: str, method: str):
                       previous=msg.previous + [Trace(service=msg.service, method=msg.method)],
                       ctx=msg.ctx)
     put(msg.dict(), msg.service)
+
+
+def abort(msg: BaseMessage):
+    msg.previous = []

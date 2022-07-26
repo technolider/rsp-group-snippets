@@ -41,15 +41,17 @@ def handle(callback: callable, queue: str, venv: str = DEFAULT_VENV, user: str =
            password: str = DEFAULT_PASS, host: str = DEFAULT_HOST, port: int = DEFAULT_PORT):
     def _callback(ch, method, properties, body):
         try:
+            print(f'body: {body}')
+            print(json.loads(body))
             callback(json.loads(body))
         except Exception as e:
             print(e)
 
     for _ in range(DEFAULT_TRIES):
         try:
-            print('🟠🐰 > Пробуем подключиться!')
+            # print('🟠🐰 > Пробуем подключиться!')
             with get_connection(venv, user, password, host, port) as connection:
-                print('🟢🐰 > Кролик подключен!')
+                # print('🟢🐰 > Кролик подключен!')
                 channel = get_channel(queue, connection)
                 channel.basic_consume(queue=queue, auto_ack=True, on_message_callback=_callback)
                 try:
